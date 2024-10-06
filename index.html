@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Renderer</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        canvas {
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="textCanvas"></canvas>
+    <script>
+        function renderText() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const text = urlParams.get('text') || 'Hello World';
+            const color = urlParams.get('color') || '#000000'; // Text color
+            const bgColor = urlParams.get('bgcolor') || 'rgba(255, 255, 255, 1)'; // Background color with default opaque white
+            const width = parseInt(urlParams.get('width')) || 300; // Canvas width
+            const height = parseInt(urlParams.get('height')) || 150; // Canvas height
+
+            const canvas = document.getElementById('textCanvas');
+            canvas.width = width;
+            canvas.height = height;
+
+            const ctx = canvas.getContext('2d');
+            
+            // Set background color with support for transparency
+            ctx.fillStyle = bgColor;
+            ctx.fillRect(0, 0, width, height); // Fill background
+            
+            // Set text color and draw text
+            ctx.fillStyle = color;
+            ctx.font = '30px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(text, width / 2, height / 2); // Draw text
+        }
+
+        // Render text when the page loads
+        window.onload = renderText;
+    </script>
+</body>
+</html>
